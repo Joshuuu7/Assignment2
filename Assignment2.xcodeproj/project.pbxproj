@@ -15,6 +15,7 @@
 		42B9A294215C850F007FA30D /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B9A293215C850F007FA30D /* MasterViewController.swift */; };
 		42B9A298215C8873007FA30D /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B9A297215C8873007FA30D /* Downloader.swift */; };
 		42B9A29A215C88BC007FA30D /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B9A299215C88BC007FA30D /* Episode.swift */; };
+		42B9A29C215C8A01007FA30D /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B9A29B215C8A01007FA30D /* EpisodeCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		42B9A293215C850F007FA30D /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		42B9A297215C8873007FA30D /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		42B9A299215C88BC007FA30D /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		42B9A29B215C8A01007FA30D /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				42929972215C75B700D8D9EB /* AppDelegate.swift */,
+				42B9A29B215C8A01007FA30D /* EpisodeCell.swift */,
 				42B9A293215C850F007FA30D /* MasterViewController.swift */,
 				42B9A291215C8486007FA30D /* DetailViewController.swift */,
 				42929976215C75B700D8D9EB /* Main.storyboard */,
@@ -149,6 +152,7 @@
 				42B9A298215C8873007FA30D /* Downloader.swift in Sources */,
 				42B9A29A215C88BC007FA30D /* Episode.swift in Sources */,
 				42929973215C75B700D8D9EB /* AppDelegate.swift in Sources */,
+				42B9A29C215C8A01007FA30D /* EpisodeCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
