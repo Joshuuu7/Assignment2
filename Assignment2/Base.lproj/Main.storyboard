@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="-542" y="370"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Episode Summary-->
         <scene sceneID="NGh-NW-t7P">
             <objects>
                 <viewController id="bv0-FL-lin" customClass="DetailViewController" customModule="Assignment2" customModuleProvider="target" sceneMemberID="viewController">
@@ -65,7 +65,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="s49-Yn-lNc"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zna-9g-dUa"/>
+                    <navigationItem key="navigationItem" title="Episode Summary" id="zna-9g-dUa">
+                        <barButtonItem key="backBarButtonItem" title="List" id="E1P-ME-cIc"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="airDateLabel" destination="Zp9-Zd-nIa" id="pkn-ad-XSV"/>
                         <outlet property="imageView" destination="fvG-3r-pae" id="yZg-GR-fQR"/>
@@ -126,7 +128,7 @@
                             <outlet property="delegate" destination="5Xv-bq-qYH" id="1OQ-rf-kM4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master View Controller" id="rCZ-eP-1mo"/>
+                    <navigationItem key="navigationItem" title="Episodes" id="rCZ-eP-1mo"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDk-KN-JrR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
