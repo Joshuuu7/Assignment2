@@ -65,7 +65,7 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! EpisodeCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MusicCell
         
         /// Create instance of "President" type.
         let musicObject : MusicTop

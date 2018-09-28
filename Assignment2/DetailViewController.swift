@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
     
     func configureView() {
         // Update the user interface for the detail item.
-        //let detail = detailItem
+        let detail = detailItem
         /*if let detail = detailItem {
             if let imageView = self.imageView {
                 downloader!.downloadImage(urlString: detail.image.medium) {
@@ -32,10 +32,10 @@ class DetailViewController: UIViewController {
             }*/
             /*if let label = titleLabel {
                 label.text = String(detail!.entry.count)
-            }
-            if let label = airDateLabel {
-                label.text = String(detail!.entry.count)
             }*/
+            if let label = airDateLabel {
+                label.text = detail!.title
+            }
         //}
     }
     
