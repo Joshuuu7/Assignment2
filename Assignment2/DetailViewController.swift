@@ -30,11 +30,11 @@ class DetailViewController: UIViewController {
                 let htmlString = "<html><head><meta name=\"viewport\" content=\"initial-scale=1.0\" /><style>body { font-family: -apple-system;font-size:12pt }</style></head><body>" + detail.summary + "</body></html>"
                 webView.loadHTMLString(htmlString, baseURL: nil)
             }*/
-            /*if let label = titleLabel {
-                label.text = String(detail!.entry.count)
-            }*/
-            if let label = airDateLabel {
+            if let label = titleLabel {
                 label.text = detail!.title
+            }
+            if let label = airDateLabel {
+                label.text = detail!.updated
             }
         //}
     }

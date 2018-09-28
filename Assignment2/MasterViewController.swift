@@ -77,6 +77,9 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
         }*/
         
         cell.titleLabel!.text = musicObject.title
+        
+        cell.subtitleLabel!.text = musicObject.updated
+        
         return cell
     }
     

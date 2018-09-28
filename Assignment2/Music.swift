@@ -43,9 +43,11 @@ struct ShowData: Decodable {
 
 class MusicTop {
     var title: String
+    var updated: String
     
-    init(title: String) {
+    init(title: String, updated: String) {
         self.title = title
+        self.updated = updated
     }
 }
 

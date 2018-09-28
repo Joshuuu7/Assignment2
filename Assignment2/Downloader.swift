@@ -14,8 +14,10 @@ class Downloader: NSObject, XMLParserDelegate {
     var music = [MusicTop]()
     
     var title = ""
+    var updated = ""
     
     var inTitle = false
+    var inUpdated = false
     
     /*var lastName = ""
     var gender = ""
@@ -51,11 +53,11 @@ class Downloader: NSObject, XMLParserDelegate {
             inTitle = true
             title = ""
         }
-            /*gender = attributeDict["gender"] ?? "unknown"
-        } else if elementName == "firstname" {
-            inFirstName = true
-            firstName = ""
-        } else if elementName == "lastname" {
+           // gender = attributeDict["gender"] ?? "unknown"
+        else if elementName == "updated" {
+            inUpdated = true
+            updated = ""
+        } /*else if elementName == "lastname" {
             inLastName = true
             lastName = ""
         } else if elementName == "age" {
@@ -69,10 +71,9 @@ class Downloader: NSObject, XMLParserDelegate {
         
         if inTitle {
             title = title + string
-        }
-        /*} else if inLastName {
-            lastName = lastName + string
-        } else if inAge {
+        } else if inUpdated {
+            updated = updated + string
+        } /*else if inAge {
             ageString = ageString + string
         }*/
     }
@@ -81,10 +82,11 @@ class Downloader: NSObject, XMLParserDelegate {
         print("End of element: \(elementName)")
         
         if elementName == "title" {
-            music.append(MusicTop(title: title ))
-        } /*else if elementName == "" {
-            inFirstName = false
-        } else if elementName == "lastname" {
+            music.append(MusicTop(title: title, updated: updated ))
+        } else if elementName == "updated" {
+            inTitle = false
+            
+        } /*else if elementName == "lastname" {
             inLastName = false
         } else if elementName == "age" {
             inAge = false
