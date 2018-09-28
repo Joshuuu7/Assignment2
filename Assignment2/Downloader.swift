@@ -9,8 +9,102 @@
 import Foundation
 import UIKit
 
-class Downloader {
+class Downloader: NSObject, XMLParserDelegate {
     
+    var music = [MusicTop]()
+    
+    var title = ""
+    
+    var inTitle = false
+    
+    /*var lastName = ""
+    var gender = ""
+    var ageString = ""
+    var age: Int?
+    
+    var inFirstName = false
+    var inLastName = false
+    var inAge = false*/
+    
+    func parseXMLData(data: Data) {
+        let parser = XMLParser(data: data)
+        parser.delegate = self
+        if (!parser.parse()) {
+            print("Error: XML data not parsed")
+        } else {
+            printMusic()
+        }
+    }
+    
+    func printMusic() {
+        for m in music {
+            print("Title: \(m.title)")
+        }
+    }
+    
+    // XMLParserDelegate methods
+    
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        print("Start of element: \(elementName)")
+        
+        if elementName == "title" {
+            inTitle = true
+            title = ""
+        }
+            /*gender = attributeDict["gender"] ?? "unknown"
+        } else if elementName == "firstname" {
+            inFirstName = true
+            firstName = ""
+        } else if elementName == "lastname" {
+            inLastName = true
+            lastName = ""
+        } else if elementName == "age" {
+            inAge = true
+            ageString = ""
+        }*/
+    }
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        print("Found characters: \(string)")
+        
+        if inTitle {
+            title = title + string
+        }
+        /*} else if inLastName {
+            lastName = lastName + string
+        } else if inAge {
+            ageString = ageString + string
+        }*/
+    }
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        print("End of element: \(elementName)")
+        
+        if elementName == "title" {
+            music.append(MusicTop(title: title ))
+        } /*else if elementName == "" {
+            inFirstName = false
+        } else if elementName == "lastname" {
+            inLastName = false
+        } else if elementName == "age" {
+            inAge = false
+            age = Int(ageString) ?? 0
+        }*/
+        
+    }
+    
+    func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+        print("XML parse error: " + parseError.localizedDescription)
+    }
+    
+    func parser(_ parser: XMLParser, validationErrorOccurred validationError: Error) {
+        print("XML parse error: " + validationError.localizedDescription)
+    }
+
+
+    
+    
+    /*
     //let imageCache = NSCache<AnyObject, AnyObject>()
     let imageCache = NSCache<NSString, UIImage>()
     
@@ -61,7 +155,7 @@ class Downloader {
             }
             task.resume()
         }
-    }
+    }*/
     
     func downloadData(urlString: String, completion: @escaping (_ data: Data?) -> Void) {
         

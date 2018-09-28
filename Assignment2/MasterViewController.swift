@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Foundation
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, XMLParserDelegate {
     
     var detailViewController: DetailViewController? = nil
-    var episodeObjects = [Episode]()
+    var musicObjects = [MusicTop]()
     var downloader = Downloader()
     var image: UIImage?
     
@@ -43,7 +44,7 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let object = episodeObjects[indexPath.row]
+                let object = musicObjects[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.downloader = downloader
@@ -60,27 +61,28 @@ class MasterViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return episodeObjects.count
+        return musicObjects.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! EpisodeCell
         
         /// Create instance of "President" type.
-        let episodeObject : Episode
+        let musicObject : MusicTop
         
-        episodeObject = episodeObjects[indexPath.row]
+        musicObject = musicObjects[indexPath.row]
         
         
-        downloader.downloadImage(urlString: episodeObject.image.medium) {
+        /*downloader.downloadImage(urlString: episodeObject.image.medium) {
             (image: UIImage?) in
             cell.logoImageView!.image = image
             
-        }
+        }*/
         
-        cell.titleLabel!.text = episodeObject.name
-        cell.subtitleLabel!.text = episodeObject.airdate
+        /*cell.titleLabel!.text = episodeObject.name
+        cell.subtitleLabel!.text = episodeObject.airdate*/
         
+        cell.titleLabel!.text = musicObject.title
         return cell
     }
     
@@ -91,7 +93,7 @@ class MasterViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            episodeObjects.remove(at: indexPath.row)
+            musicObjects.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -103,20 +105,25 @@ class MasterViewController: UITableViewController {
         
         weak var weakSelf = self
         
-        downloader.downloadData(urlString: "http://api.tvmaze.com/singlesearch/shows?q=black-mirror&embed=episodes") {
+        
+        
+        downloader.downloadData(urlString: "https://rss.itunes.apple.com/api/v1/us/apple-music/hot-tracks/all/10/explicit.atom") {
             (data) in
             
-            guard let jsonData = data else {
-                weakSelf!.presentAlert(title: "Error", message: "Unable to download JSON data")
+            guard let dataXML = data else {
+                weakSelf!.presentAlert(title: "Error", message: "Unable to download XML data")
                 return
             }
             
             do {
-                let showData = try JSONDecoder().decode(ShowData.self, from: jsonData)
-                weakSelf!.episodeObjects = showData.embedded.episodes
+                let parserXML = Downloader()
+                parserXML.parseXMLData(data: dataXML)
+                
+                weakSelf!.musicObjects = parserXML.music
+                
                 weakSelf!.tableView.reloadData()
             } catch {
-                weakSelf!.presentAlert(title: "Error", message: "Invalid JSON downloaded")
+                weakSelf!.presentAlert(title: "Error", message: "Invalid XML downloaded")
             }
         }
     }
@@ -128,5 +135,27 @@ class MasterViewController: UITableViewController {
         
         present(alertController, animated: true, completion: nil)
     }
+    
+    /*let xmlData = """
+<?xml version="1.0" encoding="UTF-8"?>
+<people>
+<person gender="male">
+<firstname>John</firstname>
+<lastname>Doe</lastname>
+<age>23</age>
+</person>
+<person gender="female">
+<firstname>Anna</firstname>
+<lastname>Diaz</lastname>
+<age>35</age>
+</person>
+<person gender="female">
+<firstname>Jane</firstname>
+<lastname>Smith</lastname>
+<age>27</age>
+</person>
+</people>
+""".data(using: .utf8)!*/
+
     
 }

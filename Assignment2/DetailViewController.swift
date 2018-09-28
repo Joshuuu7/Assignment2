@@ -18,24 +18,25 @@ class DetailViewController: UIViewController {
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
+        //let detail = detailItem
+        /*if let detail = detailItem {
             if let imageView = self.imageView {
                 downloader!.downloadImage(urlString: detail.image.medium) {
                     (image: UIImage?) in
                     imageView.image = image
                 }
-            }
-            if let webView = summaryWebView {
+            }*/
+            /*if let webView = summaryWebView {
                 let htmlString = "<html><head><meta name=\"viewport\" content=\"initial-scale=1.0\" /><style>body { font-family: -apple-system;font-size:12pt }</style></head><body>" + detail.summary + "</body></html>"
                 webView.loadHTMLString(htmlString, baseURL: nil)
-            }
-            if let label = titleLabel {
-                label.text = detail.name
+            }*/
+            /*if let label = titleLabel {
+                label.text = String(detail!.entry.count)
             }
             if let label = airDateLabel {
-                label.text = detail.airdate
-            }
-        }
+                label.text = String(detail!.entry.count)
+            }*/
+        //}
     }
     
     override func viewDidLoad() {
@@ -49,7 +50,7 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    var detailItem: Episode? {
+    var detailItem: MusicTop? {
         didSet {
             // Update the view.
             configureView()

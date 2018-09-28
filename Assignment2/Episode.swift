@@ -8,33 +8,44 @@
 
 import Foundation
 
-struct EpisodeImage: Decodable {
+struct MusicImage: Decodable {
     let medium: String
     let original: String
 }
 
-struct Episode: Decodable {
-    let name: String
-    let season: Int
-    let number: Int
-    let airdate: String
-    let image: EpisodeImage
-    let summary: String
+struct MusicData: Decodable {
+    let title: String
 }
 
-struct EpisodeData: Decodable {
-    let episodes: [Episode]
+struct Episode: Decodable {
+    let entry: [MusicData]
+    //let name: String
+    //let season: Int
+    //let number: Int
+    //let airdate: String
+    //let image: MusicImage
+    //let summary: String
+}
+
+struct Feed: Decodable {
+    let feed: Episode
 }
 
 struct ShowData: Decodable {
-    let name: String
-    let summary: String
-    let embedded: EpisodeData
+    let object: Feed
+    let title: String
     
     private enum CodingKeys: String, CodingKey {
-        case name
-        case summary
-        case embedded = "_embedded"
+        case object = "object"
+        case title
+    }
+}
+
+class MusicTop {
+    var title: String
+    
+    init(title: String) {
+        self.title = title
     }
 }
 
