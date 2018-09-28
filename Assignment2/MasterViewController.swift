@@ -27,7 +27,6 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        
         downloadData()
     }
     
@@ -72,15 +71,10 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
         
         musicObject = musicObjects[indexPath.row]
         
-        
         /*downloader.downloadImage(urlString: episodeObject.image.medium) {
             (image: UIImage?) in
             cell.logoImageView!.image = image
-            
         }*/
-        
-        /*cell.titleLabel!.text = episodeObject.name
-        cell.subtitleLabel!.text = episodeObject.airdate*/
         
         cell.titleLabel!.text = musicObject.title
         return cell
@@ -104,9 +98,7 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     func downloadData() {
         
         weak var weakSelf = self
-        
-        
-        
+ 
         downloader.downloadData(urlString: "https://rss.itunes.apple.com/api/v1/us/apple-music/hot-tracks/all/10/explicit.atom") {
             (data) in
             
@@ -135,27 +127,4 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
         
         present(alertController, animated: true, completion: nil)
     }
-    
-    /*let xmlData = """
-<?xml version="1.0" encoding="UTF-8"?>
-<people>
-<person gender="male">
-<firstname>John</firstname>
-<lastname>Doe</lastname>
-<age>23</age>
-</person>
-<person gender="female">
-<firstname>Anna</firstname>
-<lastname>Diaz</lastname>
-<age>35</age>
-</person>
-<person gender="female">
-<firstname>Jane</firstname>
-<lastname>Smith</lastname>
-<age>27</age>
-</person>
-</people>
-""".data(using: .utf8)!*/
-
-    
 }
