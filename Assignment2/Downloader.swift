@@ -13,20 +13,23 @@ class Downloader: NSObject, XMLParserDelegate {
     
     var music = [MusicTop]()
     
+    var object: [String] = []
+    var feed: [String] = []
+    var entry: [String] = []
+    var entryIndex: [String] = []
+    
+    var inObject = false
+    var inFeed = false
+    var inEntry = false
+    var inEntryIndex = false
+    
     var title = ""
     var updated = ""
+    var image = ""
     
     var inTitle = false
     var inUpdated = false
-    
-    /*var lastName = ""
-    var gender = ""
-    var ageString = ""
-    var age: Int?
-    
-    var inFirstName = false
-    var inLastName = false
-    var inAge = false*/
+    var inImageText = false
     
     func parseXMLData(data: Data) {
         let parser = XMLParser(data: data)
@@ -49,50 +52,105 @@ class Downloader: NSObject, XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         print("Start of element: \(elementName)")
         
-        if elementName == "title" {
+        //object.append(attributeDict["object"]!)
+        /*if elementName == "object" {
+           inObject = true*/
+            /*for _ in object {
+                object.append(attributeDict["feed"]!)
+                 if elementName == "feed" {
+                    inFeed = true
+                    for _ in feed {
+                        feed.append(attributeDict["entry"]!)
+                        if elementName == "entry" {
+                            inEntry = true
+                            for index in entry {
+                                entry.append(attributeDict["index"]!)
+                                if entryIndex == ["\(index)"] {
+                                    inEntryIndex = true
+                                    for _ in entryIndex {
+                                        entry.append(attributeDict["title"]!)
+                                        if elementName == "title" {
+                                            inTitle = true
+                                            title = ""
+                                        }
+                                        else if elementName == "updated" {
+                                            inUpdated = true
+                                            updated = ""
+                                        } else if elementName == "image" {
+                                            inImageText = true
+                                            image = attributeDict["__text"]!
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }*/
+        if elementName == "object" {
+            inObject = true
+            object.append(attributeDict["feed"]!)
+        } else if elementName == "feed" {
+            inFeed = true
+            for _ in feed {
+            feed.append(attributeDict["entry"]!)
+            }
+        } else if elementName == "entry" {
+            inEntry = true
+            for index in entry {
+            entry.append(attributeDict["\(index)"]!)
+            }
+        } else if entryIndex == ["\(index)"] {
+            inEntryIndex = true
+            entryIndex.append(attributeDict["title"]!)
+        } else if elementName == "title" {
             inTitle = true
             title = ""
-        }
-           // gender = attributeDict["gender"] ?? "unknown"
-        else if elementName == "updated" {
+        } else if elementName == "updated" {
             inUpdated = true
             updated = ""
-        } /*else if elementName == "lastname" {
-            inLastName = true
-            lastName = ""
-        } else if elementName == "age" {
-            inAge = true
-            ageString = ""
-        }*/
+        } else if elementName == "image" {
+            inImageText = true
+            image = attributeDict["__text"]!
+        }
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         print("Found characters: \(string)")
-        
-        if inTitle {
+        /*if inObject {
+            object = object + [string]
+        } else if inFeed {
+            feed = feed + [string]
+        } else if inEntry {
+            entry = entry + [string]
+        } else if inEntryIndex {
+            entryIndex = entryIndex + [string]
+        } else*/ if inTitle {
             title = title + string
         } else if inUpdated {
             updated = updated + string
-        } /*else if inAge {
-            ageString = ageString + string
+        } /*else if inImageText {
+            image = image + string
         }*/
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         print("End of element: \(elementName)")
         
+        //var imageText = musicImage
+        //var image = imageText.super.init(__text: __text)
+        
         if elementName == "title" {
-            music.append(MusicTop(title: title, updated: updated ))
+            music.append(MusicTop(title: title, updated: updated, image: image ))
         } else if elementName == "updated" {
             inTitle = false
             
-        } /*else if elementName == "lastname" {
-            inLastName = false
-        } else if elementName == "age" {
+        } /*else if elementName == "image" {
+            inUpdated = false
+        } *//*else if elementName == "age" {
             inAge = false
             age = Int(ageString) ?? 0
         }*/
-        
     }
     
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
@@ -103,10 +161,6 @@ class Downloader: NSObject, XMLParserDelegate {
         print("XML parse error: " + validationError.localizedDescription)
     }
 
-
-    
-    
-    /*
     //let imageCache = NSCache<AnyObject, AnyObject>()
     let imageCache = NSCache<NSString, UIImage>()
     
@@ -157,7 +211,7 @@ class Downloader: NSObject, XMLParserDelegate {
             }
             task.resume()
         }
-    }*/
+    }
     
     func downloadData(urlString: String, completion: @escaping (_ data: Data?) -> Void) {
         

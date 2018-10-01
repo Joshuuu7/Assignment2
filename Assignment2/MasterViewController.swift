@@ -13,6 +13,9 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     
     var detailViewController: DetailViewController? = nil
     var musicObjects = [MusicTop]()
+    
+    //var musicImage = [MusicImage]()
+    
     var downloader = Downloader()
     var image: UIImage?
     
@@ -68,13 +71,14 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
         
         /// Create instance of "President" type.
         let musicObject : MusicTop
+        //let musicImageObject: MusicImage
         
         musicObject = musicObjects[indexPath.row]
         
-        /*downloader.downloadImage(urlString: episodeObject.image.medium) {
+        downloader.downloadImage(urlString: musicObject.image) {
             (image: UIImage?) in
             cell.logoImageView!.image = image
-        }*/
+        }
         
         cell.titleLabel!.text = musicObject.title
         

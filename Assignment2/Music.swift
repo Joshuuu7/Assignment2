@@ -8,11 +8,6 @@
 
 import Foundation
 
-struct MusicImage: Decodable {
-    let medium: String
-    let original: String
-}
-
 struct MusicData: Decodable {
     let title: String
 }
@@ -41,13 +36,24 @@ struct ShowData: Decodable {
     }
 }
 
+/*class MusicImage: MusicTop {
+    var __text: String
+    //let original: String
+    
+    override init(__text: String) {
+        self.__text = __text
+    }
+}*/
+
 class MusicTop {
     var title: String
     var updated: String
+    var image: String
     
-    init(title: String, updated: String) {
+    init(title: String, updated: String, image: String) {
         self.title = title
         self.updated = updated
+        self.image = image
     }
 }
 

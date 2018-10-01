@@ -16,27 +16,28 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var summaryWebView: WKWebView!
     
+    var downloader: Downloader?
+    
     func configureView() {
         // Update the user interface for the detail item.
-        let detail = detailItem
-        /*if let detail = detailItem {
+        if let detail = detailItem {
             if let imageView = self.imageView {
-                downloader!.downloadImage(urlString: detail.image.medium) {
+                downloader!.downloadImage(urlString: detail.image) {
                     (image: UIImage?) in
                     imageView.image = image
                 }
-            }*/
-            /*if let webView = summaryWebView {
-                let htmlString = "<html><head><meta name=\"viewport\" content=\"initial-scale=1.0\" /><style>body { font-family: -apple-system;font-size:12pt }</style></head><body>" + detail.summary + "</body></html>"
+            }
+            if let webView = summaryWebView {
+                let htmlString = "<html><head><meta name=\"viewport\" content=\"initial-scale=1.0\" /><style>body { font-family: -apple-system;font-size:12pt }</style></head><body>" + detail.updated + "</body></html>"
                 webView.loadHTMLString(htmlString, baseURL: nil)
-            }*/
+            }
             if let label = titleLabel {
-                label.text = detail!.title
+                label.text = detail.title
             }
             if let label = airDateLabel {
-                label.text = detail!.updated
+                label.text = detail.updated
             }
-        //}
+        }
     }
     
     override func viewDidLoad() {
@@ -56,7 +57,4 @@ class DetailViewController: UIViewController {
             configureView()
         }
     }
-    
-    var downloader: Downloader?
-
 }
