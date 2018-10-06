@@ -13,10 +13,6 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     
     var detailViewController: DetailViewController? = nil
     var musicObjects = [MusicTop]()
-    //var musicImageObjects = [MusicImage]()
-    
-    //var musicImage = [MusicImage]()
-    
     var downloader = Downloader()
     var image: UIImage?
     
