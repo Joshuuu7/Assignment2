@@ -13,7 +13,7 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     
     var detailViewController: DetailViewController? = nil
     var musicObjects = [MusicTop]()
-    var musicImageObjects = [MusicImage]()
+    //var musicImageObjects = [MusicImage]()
     
     //var musicImage = [MusicImage]()
     
@@ -70,25 +70,16 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MusicCell
         
-        //var imageURL: String
-        
-        /// Create instance of "MusicTop" and "MusicImage" type.
+        /// Create instance of "MusicTop" type.
         let musicObject : MusicTop
-        
         musicObject = musicObjects[indexPath.row]
-        //var musicImageObject = musicObject.image.__text
-        
-        /*
-        downloader.downloadImage(urlString: musicImageObject) {
+   
+        downloader.downloadImage(urlString: musicObject.image) {
            (image: UIImage?) in
-            cell.logoImageView!.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: [NSURL URLWithString:mydata.imglink]]];
+            cell.logoImageView!.image = image
         }
- */
-        
         cell.titleLabel!.text = musicObject.title
-        
-        cell.subtitleLabel!.text = musicObject.updated
-        
+        cell.subtitleLabel!.text = musicObject.releaseDate
         return cell
     }
     

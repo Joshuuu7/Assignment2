@@ -12,7 +12,6 @@ import UIKit
 class Downloader: NSObject, XMLParserDelegate{
     
     var music = [MusicTop]()
-    var musicImage = [MusicImage]()
     
     var object: [String] = []
     var feed: [String] = []
@@ -23,21 +22,13 @@ class Downloader: NSObject, XMLParserDelegate{
     var inFeed = false
     var inEntry = false
     var inEntryIndex = false
-    
-    var title = ""
-    var updated = ""
-    var image = ""
-    var imageURL : [String] = []
-    
-    var imageC: UIImage?
-    
     var inTitle = false
-    var inUpdated = false
-    var inImage = false
-    var inImageText = false
+    var inReleaseDate = false
     var inImageURL = false
     
-    //NSURL *url = [NSURL URLWithString: @escaping];
+    var title = ""
+    var releaseDate = ""
+    var imageURL = ""
     
     func parseXMLData(data: Data) {
         let parser = XMLParser(data: data)
@@ -51,7 +42,7 @@ class Downloader: NSObject, XMLParserDelegate{
     
     func printMusic() {
         for m in music {
-            print("Title: \(m.title), Updated: \(m.updated), ImageURL: \(m.image)")
+            print("Title: \(m.title), Release Date: \(m.releaseDate), Image URL: \(m.image)")
         }
     }
     
@@ -79,249 +70,37 @@ class Downloader: NSObject, XMLParserDelegate{
         } else if elementName == "title" {
             inTitle = true
             title = ""
-        } else if elementName == "updated" {
-            inUpdated = true
-            updated = ""
+        } else if elementName == "im:releaseDate" {
+            inReleaseDate = true
+            releaseDate = ""
         } else if elementName == "im:image" {
             inImageURL = true
-            image = ""
-            //image = attributeDict["__text"]!
-            //imageURL.append(contentsOf: attributeDict["__text"]!)
-            //imageURL.append(attributeDict["__text"]!
-            //image = imageURL[0]
-            //downloadImage(urlString: image, completion: UIImage)
-            
+            imageURL = ""
         }
-        
-        //object.append(attributeDict["object"]!)
-        
-        /*if elementName == "object" {
-            inObject = true
-            object.append(attributeDict["feed"]!)
-            if elementName == "feed" {
-                inFeed = true
-                for _ in feed {
-                    feed.append(attributeDict["entry"]!)
-                    if elementName == "entry" {
-                        inEntry = true
-                        for index in entry {
-                            entry.append(attributeDict["\(index)"]!)
-                            if entryIndex == ["\(index)"] {
-                                inEntryIndex = true
-                                entryIndex.append(attributeDict["title"]!)
-                                entryIndex.append(attributeDict["updated"]!)
-                                entryIndex.append(attributeDict["image"]!)
-                            } else if elementName == "title" {
-                                inTitle = true
-                                title = ""
-                            } else if elementName == "updated" {
-                                inUpdated = true
-                                updated = ""
-                            } else if elementName == "image" {
-                                inImageText = true
-                                image.append(attributeDict["__text"]!)
-                                if elementName == "__text" {
-                                    inImageURL = true
-                                }
-                            }
-                        }
-                    }
-                }
-            }*/
-        
-        
-        /*if elementName == "object" {
-            inObject = true
-            object.append(attributeDict["feed"]!)
-        }; if elementName == "feed" {
-            inFeed = true
-            for _ in feed {
-                feed.append(attributeDict["entry"]!)
-            }
-        }; if elementName == "entry" {
-            inEntry = true
-            for index in entry {
-                entry.append(attributeDict["\(index)"]!)
-                if entryIndex == ["\(index)"] {
-                    inEntryIndex = true
-                    entryIndex.append(attributeDict["title"]!)
-                    entryIndex.append(attributeDict["updated"]!)
-                    entryIndex.append(attributeDict["image"]!)
-                }; if elementName == "title" {
-                    inTitle = true
-                    title = ""
-                } else if elementName == "updated" {
-                    inUpdated = true
-                    updated = ""
-                } else if elementName == "image" {
-                    inImageText = true
-                    image.append(attributeDict["__text"]!)
-                    if elementName == "__text" {
-                        inImageURL = true
-                    };
-                }
-            }
-        }*/
-        
-        /*if elementName == "feed" {
-            inFeed = true
-            for _ in feed {
-                feed.append(attributeDict["entry"]!)
-            }
-        }; if elementName == "entry" {
-            inEntry = true
-            for index in entry {
-                entry.append(attributeDict["\(index)"]!)
-            }
-            
-        }; if entryIndex == ["\(index)"] {
-            inEntryIndex = true
-            entryIndex.append(attributeDict["title"]!)
-            entryIndex.append(attributeDict["updated"]!)
-            entryIndex.append(attributeDict["image"]!)
-        }; if elementName == "title" {
-            inTitle = true
-            title = ""
-        }; if elementName == "updated" {
-            inUpdated = true
-            updated = ""
-        }; if elementName == "image" {
-            inImageText = true
-            image.append(attributeDict["__text"]!)
-            if elementName == "__text" {
-                inImageURL = true
-            };
-        }*/
-        
-        /*if entryIndex == ["\(index)"] {
-         inEntryIndex = true
-         entryIndex.append(attributeDict["title"]!)
-         entryIndex.append(attributeDict["updated"]!)
-         entryIndex.append(attributeDict["image"]!)
-         } else if elementName == "title" {
-         inTitle = true
-         title = ""
-         } else if elementName == "updated" {
-         inUpdated = true
-         updated = ""
-         } else if elementName == "image" {
-         inImageText = true
-         image.append(attributeDict["__text"]!)
-         };if elementName == "__text" {
-         inImageURL = true
-         //music
-         //image.append(contentsOf: image)
-         
-         }*/
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         print("Found characters: \(string)")
-        /*if inObject {
-            object = object + [string]
-        } else if inFeed {
-            feed = feed + [string]
-        } else if inEntry {
-            entry = entry + [string]
-        } else if inEntryIndex {
-            entryIndex = entryIndex + [string]
-        } else*/ if inTitle {
+        if inTitle {
             title = title + string
-        } else if inUpdated {
-            updated = updated + string
-        } else if inImageText {
-            image = image + string
+        } else if inImageURL {
+            imageURL = imageURL + string
+        } else if inReleaseDate {
+            releaseDate = releaseDate + string
         }
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         print("End of element: \(elementName)")
         
-        //let imageURL: String?
-        //let musicImage = MusicImage.init(__text: imageURL!)
-        //let image: UIImage
-        
-        //downloadImage(urlString: elementName, completion: image)
-        
         if elementName == "title" {
             inTitle = false
-            
-        } else if elementName == "updated" {
-            inUpdated = false
-            
-        }
-        
-        //var imageURL: String?
-        //let musicImage = MusicImage.init(__text: imageURL)!
-        //var image = MusicImage(title: title, updated: updated, image: MusicImage (__text: musicImage))
-        
-        /*if elementName == "title" {
-            music.append(MusicTop(title: title, updated: updated, image: musicImage))
-        } else if elementName == "updated" {
-            inTitle = false
-         } */else if elementName == "im:image" {
+        } else if elementName == "im:image" {
             inImageURL = false
-            music.append(MusicTop(title: title, updated: updated, image: MusicImage (__text: image) ))
-            //[UIImage imageWithData: [NSData dataWithContentsOfURL: [NSURL URLWithString:mydata.imglink]]];
-        } /*else if elementName == "age" {
-            inAge = false
-            age = Int(ageString) ?? 0
-        }*/
-        
-        /*if elementName == "object" {
-            inObject = true
-            music.append(MusicTop(title: title, updated: updated, image: MusicImage(__text: image)))
-            if elementName == "feed" {
-                inObject = false
-                inFeed = true
-                if elementName == "entry" {
-                    inFeed = false
-                    inEntry = true
-                    for index in entry {
-                        entry.append(index)
-                        if entryIndex == ["\(index)"] {
-                            inEntry = false
-                            inEntryIndex = true
-                            if elementName == "title" {
-                                inEntryIndex = false
-                                inTitle = true
-                            } else if elementName == "updated" {
-                                inEntryIndex = false
-                                inUpdated = true
-                            } else if elementName == "image" {
-                                inEntryIndex = false
-                                inImage = true
-                                if elementName == "__text" {
-                                    inImageText = true
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
-        
-        /*if elementName == "object" {
-            inObject = true
-            music.append(MusicTop(title: title, updated: updated, image: MusicImage(__text: image)))
-        }; if elementName == "feed" {
-            inObject = false
-        }; if elementName == "entry" {
-            inFeed = false
-        };for index in entry {
-            entry.append(index)
-        }; if entryIndex == ["\(index)"] {
-            inEntry = false
-        } else if elementName == "title" {
-            inEntryIndex = false
-        } else if elementName == "updated" {
-            inTitle = false
-        }; if elementName == "image" {
-            inUpdated = false
-        } else if elementName == "__text" {
-            inImageText = false
-            //inImageURL = true
-        }*/
+        } else if elementName == "im:releaseDate" {
+            inReleaseDate = false
+            music.append(MusicTop(title: title, releaseDate: releaseDate, image: imageURL))
+        }
     }
     
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
@@ -330,16 +109,6 @@ class Downloader: NSObject, XMLParserDelegate{
     
     func parser(_ parser: XMLParser, validationErrorOccurred validationError: Error) {
         print("XML parse error: " + validationError.localizedDescription)
-    }
-
-    //let imageCache = NSCache<AnyObject, AnyObject>()
-    let imageCache = NSCache<NSString, UIImage>()
-    
-    // Gets an image. Arguments are the image URL as a string, and
-    // a closure to execute if the image is successfully obtained.
-    func downloadImages(initWithContentsOfURL: String, options: UIImage?)
-    {
-        
     }
     
     func downloadData(urlString: String, completion: @escaping (_ data: Data?) -> Void) {
@@ -378,7 +147,11 @@ class Downloader: NSObject, XMLParserDelegate{
         }
         task.resume()
     }
-    /*
+    
+    let imageCache = NSCache<NSString, UIImage>()
+    
+    // Gets an image. Arguments are the image URL as a string, and
+    // a closure to execute if the image is successfully obtained.
     func downloadImage(urlString: String, completion: @escaping (_ image: UIImage?) -> Void) {
         
         if let cachedImage = imageCache.object(forKey: urlString as NSString) {
@@ -424,32 +197,5 @@ class Downloader: NSObject, XMLParserDelegate{
             }
             task.resume()
         }
-    }*/
-    
-}
-
-extension UIImageView {
-    func downloadImage(urlString: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
-        contentMode = mode
-    
-        guard let imageURL = URL(string: urlString) else {
-            // Perform some error handling
-            print("Invalid URL string")
-            //mode(UIImage(named: "default.png"))
-            return
-        }
-        
-        URLSession.shared.dataTask(with: imageURL) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() {
-                self.image = image
-            }
-            }.resume()
     }
 }
-
