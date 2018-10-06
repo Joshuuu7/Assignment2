@@ -90,7 +90,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="airDateLabel" destination="Zp9-Zd-nIa" id="pkn-ad-XSV"/>
-                        <outlet property="imageView" destination="fvG-3r-pae" id="yZg-GR-fQR"/>
+                        <outlet property="imageView" destination="fvG-3r-pae" id="DgW-FQ-kwC"/>
                         <outlet property="summaryWebView" destination="DKI-67-rZk" id="6m4-B0-A8H"/>
                         <outlet property="titleLabel" destination="pt0-Tu-Usw" id="bWl-lW-uFr"/>
                     </connections>

@@ -13,6 +13,7 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     
     var detailViewController: DetailViewController? = nil
     var musicObjects = [MusicTop]()
+    var musicImageObjects = [MusicImage]()
     
     //var musicImage = [MusicImage]()
     
@@ -69,16 +70,20 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! MusicCell
         
-        /// Create instance of "President" type.
+        //var imageURL: String
+        
+        /// Create instance of "MusicTop" and "MusicImage" type.
         let musicObject : MusicTop
-        //let musicImageObject: MusicImage
         
         musicObject = musicObjects[indexPath.row]
+        //var musicImageObject = musicObject.image.__text
         
-        downloader.downloadImage(urlString: musicObject.image) {
-            (image: UIImage?) in
-            cell.logoImageView!.image = image
+        /*
+        downloader.downloadImage(urlString: musicImageObject) {
+           (image: UIImage?) in
+            cell.logoImageView!.image = [UIImage imageWithData: [NSData dataWithContentsOfURL: [NSURL URLWithString:mydata.imglink]]];
         }
+ */
         
         cell.titleLabel!.text = musicObject.title
         
@@ -117,9 +122,7 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
             do {
                 let parserXML = Downloader()
                 parserXML.parseXMLData(data: dataXML)
-                
                 weakSelf!.musicObjects = parserXML.music
-                
                 weakSelf!.tableView.reloadData()
             } catch {
                 weakSelf!.presentAlert(title: "Error", message: "Invalid XML downloaded")
@@ -135,3 +138,4 @@ class MasterViewController: UITableViewController, XMLParserDelegate {
         present(alertController, animated: true, completion: nil)
     }
 }
+

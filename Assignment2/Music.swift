@@ -7,54 +7,31 @@
 //
 
 import Foundation
+import UIKit
 
-struct MusicData: Decodable {
-    let title: String
-}
-
-struct Episode: Decodable {
-    let entry: [MusicData]
-    //let name: String
-    //let season: Int
-    //let number: Int
-    //let airdate: String
-    //let image: MusicImage
-    //let summary: String
-}
-
-struct Feed: Decodable {
-    let feed: Episode
-}
-
-struct ShowData: Decodable {
-    let object: Feed
-    let title: String
+struct MusicImage {
     
-    private enum CodingKeys: String, CodingKey {
-        case object = "object"
-        case title
-    }
-}
-
-/*class MusicImage: MusicTop {
+    //var musicTop: MusicTop?
     var __text: String
-    //let original: String
     
-    override init(__text: String) {
+    /*init(title: String, updated: String, image:  MusicImage (__text: String)) {
+        //super.init(title: String, updated: String, image:  MusicImage)
+        //musicTop = MusicImage(__text: String, title: String, updated: String, image: String)
+        
         self.__text = __text
-    }
-}*/
+    }*/
+}
 
-class MusicTop {
+struct MusicTop {
     var title: String
     var updated: String
-    var image: String
+    var image: MusicImage
     
-    init(title: String, updated: String, image: String) {
+    /*init(title: String, updated: String, image: MusicImage) {
         self.title = title
         self.updated = updated
         self.image = image
-    }
+    }*/
 }
 
 
